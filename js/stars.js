@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let mouseX = 0;
   
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      
+    function initCanvas() {
+        resizeCanvas();
+        requestAnimationFrame(initCanvas); // ensures canvas resizes dynamically
+      }
+      initCanvas();
   
     class Star {
       constructor() { this.reset(); }
