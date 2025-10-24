@@ -164,10 +164,6 @@ body.fade-in {
   opacity: 1;
 }
 
-body.fade-out {
-  opacity: 0;
-}
-
 /* === Sliding + soft fade animation (applies to .glass-card via body classes) === */
 /* Slide out to right (navigating "next") */
 body.slide-out-right .glass-card {
