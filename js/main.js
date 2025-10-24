@@ -1,35 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
 
-  // Add fade-in / slide-in class based on history direction
-  if (sessionStorage.getItem("slideDir") === "left") {
+  // Start fade-in immediately
+  requestAnimationFrame(() => {
+    body.classList.add("fade-in");
+  });
+
+  // Slide-in direction from sessionStorage
+  const dir = sessionStorage.getItem("slideDir");
+  if (dir === "left") {
     body.classList.add("slide-in-left");
-  } else {
+  } else if (dir === "right") {
     body.classList.add("slide-in-right");
   }
   sessionStorage.removeItem("slideDir");
 
-  // Handle page transitions via arrow navigation
+  // Arrow navigation
   document.querySelectorAll(".nav-arrow").forEach(arrow => {
     arrow.addEventListener("click", e => {
-      const dir = arrow.dataset.dir;
-      const nextPage = getNextPage(dir);
+      e.preventDefault();
+      const direction = arrow.dataset.dir;
+      const nextPage = getNextPage(direction);
 
-      if (nextPage) {
-        e.preventDefault();
-        body.classList.remove("slide-in-left", "slide-in-right");
-        body.classList.add(dir === "next" ? "slide-out-right" : "slide-out-left");
+      if (!nextPage) return;
 
-        sessionStorage.setItem("slideDir", dir === "next" ? "right" : "left");
+      body.classList.remove("slide-in-left", "slide-in-right", "fade-in");
+      body.classList.add(direction === "next" ? "slide-out-right" : "slide-out-left");
 
-        setTimeout(() => {
-          window.location.href = nextPage;
-        }, 600);
-      }
+      // Store direction for next page
+      sessionStorage.setItem("slideDir", direction === "next" ? "right" : "left");
+
+      setTimeout(() => {
+        window.location.href = nextPage;
+      }, 600); // match CSS transition
     });
   });
 });
 
+// same helper function as before
 function getNextPage(direction) {
   const pages = [
     "index.html",
