@@ -18,6 +18,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   
   .navbar {
@@ -125,14 +127,12 @@
       margin-top: 0.5em;
     }
   }
-  /* --- Performance + Smooth Animation Tweaks --- */
-  body {
-    will-change: opacity;
+  
+  body.fade-in {
+    opacity: 1;
   }
-
-  .glass-card {
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  
+  body.fade-out {
+    opacity: 0;
   }
-  .glass-card:hover {
-    transform: scale(1.01);
-  }
+  
