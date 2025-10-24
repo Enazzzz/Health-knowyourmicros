@@ -1,37 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VitalFoods | Vitamins & Minerals</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/main.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitamins & Minerals</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- Star canvas -->
+  <canvas id="star-canvas"></canvas>
+
+  <!-- Navbar -->
   <header class="navbar">
-    <h1>VitalFoods</h1>
+    <h1>Health Hub</h1>
     <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="vitamin-b6.html">B6</a>
-      <a href="vitamin-b12.html">B12</a>
-      <a href="vitamin-c.html">C</a>
-      <a href="vitamin-d.html">D</a>
-      <a href="iron.html">Iron</a>
-      <a href="calcium.html">Calcium</a>
-      <a href="superfoods.html">Superfoods</a>
+      <a href="#b6">B6</a>
+      <a href="#b12">B12</a>
+      <a href="#c">C</a>
+      <a href="#d">D</a>
+      <a href="#iron">Iron</a>
+      <a href="#calcium">Calcium</a>
+      <a href="#superfoods">Superfoods</a>
     </nav>
   </header>
 
-  <main class="glass-card center">
-    <h2>Welcome to <span class="accent">VitalFoods</span></h2>
-    <p>Explore essential vitamins and minerals that support your body’s health. Learn what they do, what happens when you don’t get enough, and which foods are rich in them.</p>
-    <button class="next-btn" onclick="window.location.href='vitamin-b6.html'">Start Learning →</button>
-    <div class="nav-arrow left" data-dir="prev">&#10094;</div>
-    <div class="nav-arrow right" data-dir="next">&#10095;</div>
-  </main>
+  <!-- Sections -->
+  <section id="b6" class="glass-card section">
+    <h2>Vitamin B6</h2>
+    <p>Importance: Helps with brain development and immune function. Deficiency can cause irritability, confusion, and weakened immunity.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/vitamin-b6-food1.jpg" alt="Food 1">
+      <img src="assets/images/vitamin-b6-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="b12" class="glass-card section">
+    <h2>Vitamin B12</h2>
+    <p>Importance: Essential for red blood cell formation and nervous system health. Deficiency can cause anemia and neurological issues.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/vitamin-b12-food1.jpg" alt="Food 1">
+      <img src="assets/images/vitamin-b12-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="c" class="glass-card section">
+    <h2>Vitamin C</h2>
+    <p>Importance: Supports immune system and collagen formation. Deficiency can lead to scurvy and poor wound healing.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/vitamin-c-food1.jpg" alt="Food 1">
+      <img src="assets/images/vitamin-c-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="d" class="glass-card section">
+    <h2>Vitamin D</h2>
+    <p>Importance: Supports calcium absorption and bone health. Deficiency can cause rickets or osteoporosis.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/vitamin-d-food1.jpg" alt="Food 1">
+      <img src="assets/images/vitamin-d-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="iron" class="glass-card section">
+    <h2>Iron</h2>
+    <p>Importance: Essential for hemoglobin and oxygen transport. Deficiency can cause anemia and fatigue.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/iron-food1.jpg" alt="Food 1">
+      <img src="assets/images/iron-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="calcium" class="glass-card section">
+    <h2>Calcium</h2>
+    <p>Importance: Supports strong bones and teeth, nerve signaling, and muscle function. Deficiency can lead to osteoporosis.</p>
+    <h3>Foods:</h3>
+    <div class="food-gallery">
+      <img src="assets/images/calcium-food1.jpg" alt="Food 1">
+      <img src="assets/images/calcium-food2.jpg" alt="Food 2">
+    </div>
+  </section>
+
+  <section id="superfoods" class="glass-card section">
+    <h2>Superfoods</h2>
+    <p>Whole foods rich in multiple nutrients: leafy greens, berries, nuts, and seeds.</p>
+    <div class="food-gallery">
+      <img src="assets/images/superfood1.jpg" alt="Food 1">
+      <img src="assets/images/superfood2.jpg" alt="Food 2">
+      <img src="assets/images/superfood3.jpg" alt="Food 3">
+    </div>
+  </section>
 
   <footer>
-    <p>Created by Zane & Team for Health Class 2025 • Deployed on Vercel</p>
+    <p>© 2025 Health Hub</p>
   </footer>
+
+  <script src="js/stars.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
