@@ -1,98 +1,247 @@
-/* === GENERAL PAGE STYLE === */
-body {
-  margin: 0;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  background: rgba(10, 10, 10, 0.9);
-  color: #fff;
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  background-image: radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.05), transparent 40%);
-  transition: background 0.5s ease-in-out;
-  overflow-x: hidden;
+:root {
+  --bg-dark: #0f0f0f;
+  --accent: #e63946;
+  --text: #fff;
+  --glass: rgba(255, 255, 255, 0.05);
 }
 
-/* === SLIDE CONTAINER === */
-.page-content {
-  position: relative;
+/* Reset / base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Body + background */
+body {
+  background: var(--bg-dark) url('../assets/images/bg-texture.jpg') center/cover fixed;
+  color: var(--text);
   min-height: 100vh;
-  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
+  opacity: 0;                          /* start hidden; JS will toggle fade-in */
+  transition: opacity 0.5s ease-in-out;
+  overflow-x: hidden;                  /* avoid horizontal scroll during slide */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 1em 2em;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: var(--glass);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.navbar h1 {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.navbar nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 0.5em;
+  transition: color 0.3s;
+}
+.navbar nav a:hover,
+.navbar nav a.active {
+  color: var(--accent);
+}
+
+/* Glass card (page container) */
+.glass-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 2em;
+  margin: 3em auto;
+  width: 85%;
+  max-width: 850px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  /* Keep original fadeIn animation for first load if desired */
+  animation: fadeIn 0.6s ease forwards;
+  /* Prepare for sliding transitions */
+  transform: translateX(0);
+  transition: transform 0.6s cubic-bezier(.2,.9,.2,1), opacity 0.45s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Center helper */
+.center {
+  text-align: center;
+}
+
+/* Buttons */
+.next-btn {
+  background: var(--accent);
+  border: none;
+  padding: 0.7em 1.5em;
+  border-radius: 10px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 1.5em;
+  transition: background 0.3s, transform 0.15s;
+}
+.next-btn:hover {
+  background: #ff4d5a;
+  transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 1em;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-size: 0.9em;
+}
+
+/* Food gallery */
+.food-gallery {
+  display: flex;
   justify-content: center;
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin-top: 1.5em;
 }
 
-/* === FADE + SLIDE ANIMATIONS === */
-body.slide-out-left .page-content {
-  opacity: 0;
-  transform: translateX(-60px);
+.food-gallery img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s;
+}
+.food-gallery img:hover {
+  transform: scale(1.05);
 }
 
-body.slide-out-right .page-content {
-  opacity: 0;
-  transform: translateX(60px);
+/* Accent text */
+.accent {
+  color: var(--accent);
 }
 
-body.slide-in-left .page-content {
-  opacity: 1;
-  transform: translateX(0);
-  animation: slideInLeft 0.6s ease forwards;
+/* legacy fade keyframes used on initial render */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
 
-body.slide-in-right .page-content {
-  opacity: 1;
-  transform: translateX(0);
-  animation: slideInRight 0.6s ease forwards;
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
+/* small-screen layout */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  .navbar nav {
+    margin-top: 0.5em;
   }
+  .glass-card {
+    width: 92%;
+    margin: 2rem auto;
+    padding: 1.25rem;
+  }
+  .food-gallery img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* === Fade-in/out classes applied to <body> (kept from before) === */
+body.fade-in {
+  opacity: 1;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+
+/* === Sliding + soft fade animation (applies to .glass-card via body classes) === */
+/* Slide out to right (navigating "next") */
+body.slide-out-right .glass-card {
+  opacity: 0;
+  transform: translateX(40px) scale(0.995);
+}
+
+/* Slide out to left (navigating "prev") */
+body.slide-out-left .glass-card {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.995);
+}
+
+/* Slide in from right (arriving from prev -> next) */
+body.slide-in-right .glass-card {
+  opacity: 1;
+  transform: translateX(0);
+  animation: slideInRight 0.6s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* Slide in from left (arriving from next -> prev) */
+body.slide-in-left .glass-card {
+  opacity: 1;
+  transform: translateX(0);
+  animation: slideInLeft 0.6s cubic-bezier(.2,.9,.2,1) forwards;
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* === NAVIGATION ARROWS === */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* subtle blur while sliding out to soften "harshness" */
+body.slide-out-right .glass-card,
+body.slide-out-left .glass-card {
+  filter: blur(2px) brightness(0.95);
+}
+
+/* === Navigation arrows (left/right) - unobtrusive + frosted === */
 .nav-arrow {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(30, 30, 30, 0.6);
-  border: 1px solid rgba(255, 0, 0, 0.4);
+  background: rgba(30, 30, 30, 0.55);
+  border: 1px solid rgba(230,57,70,0.12);
   color: #fff;
-  padding: 0.6rem 1rem;
-  border-radius: 100px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
   cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
+  z-index: 60;
+  transition: all 0.22s ease;
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-user-select: none;
+  user-select: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
 .nav-arrow:hover {
-  background: rgba(255, 0, 0, 0.7);
-  transform: translateY(-50%) scale(1.08);
+  background: rgba(230,57,70,0.95);
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.45);
 }
 
-/* Left & Right placement */
 .nav-arrow.left {
   left: 1rem;
 }
@@ -101,39 +250,15 @@ body.slide-in-right .page-content {
   right: 1rem;
 }
 
-/* === IMAGES / ICON AREAS === */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  width: 100%;
-  margin-top: 2rem;
+/* hide arrows on very small screens (or keep but smaller) */
+@media (max-width: 520px) {
+  .nav-arrow {
+    display: none;
+  }
 }
 
-.image-grid img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.image-grid img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
-}
-
-/* === TITLES === */
-h1, h2 {
-  color: #ff4c4c;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-  letter-spacing: 1px;
-}
-
-p {
-  max-width: 800px;
-  text-align: center;
-  line-height: 1.7;
-  font-size: 1.1rem;
-  color: #ddd;
+/* Accessibility focus states */
+.nav-arrow:focus {
+  outline: 3px solid rgba(230,57,70,0.25);
+  outline-offset: 2px;
 }
