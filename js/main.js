@@ -15,14 +15,3 @@ sections.forEach(section => {
   section.style.transform = "translateY(20px)";
   observer.observe(section);
 });
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-
-function initCanvas() {
-  resizeCanvas();
-  requestAnimationFrame(initCanvas); // ensures canvas resizes dynamically
-}
-initCanvas();

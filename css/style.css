@@ -14,6 +14,7 @@
 }
 
 body {
+  background: transparent; /* remove the dark color */
   color: var(--text);
   min-height: 100vh;
   display: flex;
@@ -21,6 +22,8 @@ body {
   scroll-behavior: smooth;
   position: relative;
   overflow-x: hidden;
+  padding-top: 80px;    /* space for navbar */
+  padding-bottom: 60px; /* space for footer */
 }
 
 /* Star canvas */
@@ -31,21 +34,25 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background: var(--bg-dark);
+  background: transparent; /* make canvas background transparent */
 }
 
 /* Navbar */
 .navbar {
+  position: fixed;       /* lock to top */
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1em 2em;
+  background: rgba(30, 30, 40, 0.1); /* subtle tinted frosted glass */
   backdrop-filter: blur(10px);
-  background: var(--glass);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* soft outline */
+  z-index: 100;          /* make sure it’s above all content */
 }
+
 
 .navbar h1 {
   color: var(--accent);
@@ -66,16 +73,20 @@ body {
 
 /* Sections */
 .section {
-  background: var(--glass);
+  background: rgba(30, 30, 40, 0.25); /* subtle tinted background */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* soft outline */
+  backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 2em;
   margin: 3em auto;
   width: 85%;
   max-width: 850px;
-  backdrop-filter: blur(12px);
   box-shadow: 0 0 30px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
+
 
 /* Section headings */
 .section h2 {
@@ -106,12 +117,17 @@ body {
 
 /* Footer */
 footer {
-  margin-top: auto;
+  position: fixed;       /* lock to bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
   text-align: center;
-  padding: 1em;
-  background: var(--glass);
+  padding: 1em 2em;
+  background: rgba(30, 30, 40, 0.1); /* same tinted frosted glass */
   backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* soft outline */
   font-size: 0.9em;
+  z-index: 100;
 }
 
 /* Responsive */
