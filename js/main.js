@@ -1,21 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
 
-  // Start fade-in immediately
-  requestAnimationFrame(() => {
-    body.classList.add("fade-in");
-  });
+  // Only fade-in if this is index.html and not a slide navigation
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  const slideDir = sessionStorage.getItem("slideDir");
 
-  // Slide-in direction from sessionStorage
-  const dir = sessionStorage.getItem("slideDir");
-  if (dir === "left") {
-    body.classList.add("slide-in-left");
-  } else if (dir === "right") {
-    body.classList.add("slide-in-right");
+  if (currentPage === "index.html" && !slideDir) {
+    // fade-in only for first index page load
+    requestAnimationFrame(() => {
+      body.classList.add("fade-in");
+    });
+  } else if (slideDir) {
+    // apply slide-in classes based on stored direction
+    body.classList.add(slideDir === "left" ? "slide-in-left" : "slide-in-right");
+    sessionStorage.removeItem("slideDir");
   }
-  sessionStorage.removeItem("slideDir");
 
-  // Arrow navigation
+  // Arrow navigation (carousel)
   document.querySelectorAll(".nav-arrow").forEach(arrow => {
     arrow.addEventListener("click", e => {
       e.preventDefault();
@@ -27,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.classList.remove("slide-in-left", "slide-in-right", "fade-in");
       body.classList.add(direction === "next" ? "slide-out-right" : "slide-out-left");
 
-      // Store direction for next page
+      // store direction for next page
       sessionStorage.setItem("slideDir", direction === "next" ? "right" : "left");
 
       setTimeout(() => {
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// same helper function as before
 function getNextPage(direction) {
   const pages = [
     "index.html",
