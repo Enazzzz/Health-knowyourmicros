@@ -3,14 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
   const slideDir = sessionStorage.getItem("slideDir");
 
-  // FIRST PAGE LOAD FADE-IN ONLY
+  // Only fade-in on first index load
   if (currentPage === "index.html" && !slideDir) {
-    // fade in on initial load
-    requestAnimationFrame(() => {
-      body.classList.add("fade-in");
-    });
+    body.classList.add("fade-in");
   } 
-  // CAROUSEL NAVIGATION: apply slide-in only
+  // Carousel slide-in only
   else if (slideDir) {
     body.classList.add(slideDir === "left" ? "slide-in-left" : "slide-in-right");
     sessionStorage.removeItem("slideDir");
@@ -25,23 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!nextPage) return;
 
-      // REMOVE fade-in completely to prevent any fade-out
+      // Only slide classes — no fade-out
       body.classList.remove("fade-in", "slide-in-left", "slide-in-right");
-      // add slide-out animation based on arrow
       body.classList.add(direction === "next" ? "slide-out-right" : "slide-out-left");
 
-      // store direction for next page slide-in
       sessionStorage.setItem("slideDir", direction === "next" ? "right" : "left");
 
-      // navigate after animation
       setTimeout(() => {
         window.location.href = nextPage;
-      }, 600); // matches CSS transition duration
+      }, 600);
     });
   });
 });
 
-// helper for carousel
 function getNextPage(direction) {
   const pages = [
     "index.html",
