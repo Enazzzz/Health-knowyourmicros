@@ -1,0 +1,138 @@
+:root {
+    --bg-dark: #0f0f0f;
+    --accent: #e63946;
+    --text: #fff;
+    --glass: rgba(255, 255, 255, 0.05);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    background: var(--bg-dark) url('../assets/images/bg-texture.jpg') center/cover fixed;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+    backdrop-filter: blur(10px);
+    background: var(--glass);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .navbar h1 {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  
+  .navbar nav a {
+    color: var(--text);
+    text-decoration: none;
+    margin: 0 0.5em;
+    transition: color 0.3s;
+  }
+  .navbar nav a:hover,
+  .navbar nav a.active {
+    color: var(--accent);
+  }
+  
+  .glass-card {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 2em;
+    margin: 3em auto;
+    width: 85%;
+    max-width: 850px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    animation: fadeIn 0.6s ease forwards;
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  .next-btn {
+    background: var(--accent);
+    border: none;
+    padding: 0.7em 1.5em;
+    border-radius: 10px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 1.5em;
+    transition: background 0.3s;
+  }
+  .next-btn:hover {
+    background: #ff4d5a;
+  }
+  
+  footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 1em;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    font-size: 0.9em;
+  }
+  
+  .food-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-top: 1.5em;
+  }
+  
+  .food-gallery img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s;
+  }
+  .food-gallery img:hover {
+    transform: scale(1.05);
+  }
+  
+  .accent {
+    color: var(--accent);
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  
+  @media (max-width: 600px) {
+    .navbar {
+      flex-direction: column;
+    }
+    .navbar nav {
+      margin-top: 0.5em;
+    }
+  }
+  /* --- Performance + Smooth Animation Tweaks --- */
+  body {
+    will-change: opacity;
+  }
+
+  .glass-card {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .glass-card:hover {
+    transform: scale(1.01);
+  }
